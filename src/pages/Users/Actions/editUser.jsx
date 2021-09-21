@@ -2,21 +2,54 @@ import Card from "../../../components/Card/Card";
 import CardHeader from "../../../components/Card/CardHeader";
 import PageHeader from "../../../components/PageHeader/PageHeader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import CardBody from "../../../components/Card/CardBody";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import GridItem from "../../../components/Grid/GridItem";
 import React, {useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import {updateUser, getUser} from "../../../api/immoApi";
+import {makeStyles} from "@material-ui/core/styles";
 
+const styles = {
+    cardCategoryWhite: {
+        "&,& a,& a:hover,& a:focus": {
+            color: "rgba(255,255,255,.62)",
+            margin: "0",
+            fontSize: "14px",
+            marginTop: "0",
+            marginBottom: "0"
+        },
+        "& a,& a:hover,& a:focus": {
+            color: "#FFFFFF"
+        }
+    },
+    cardTitleWhite: {
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none",
+        "& small": {
+            color: "#777",
+            fontSize: "65%",
+            fontWeight: "400",
+            lineHeight: "1"
+        }
+    }
+};
+
+const useStyles = makeStyles(styles);
 
 export default function EditUser(){
-
+    const history = useHistory();
+    const classes = useStyles();
     const [userInfos, setUserInfos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -32,7 +65,10 @@ export default function EditUser(){
                 console.log(error)
             });
     },[id])
-
+    const handleGoBack = () => {
+        let path = `/users`;
+        history.push(path);
+    }
     const validationSchema = yup.object({
         lastname: yup
             .string('Veuillez saisir votre nom')
@@ -61,7 +97,7 @@ export default function EditUser(){
             .string('Veuillez choisir un role')
             .required('Veuillez choisir un role'),
     });
-    let lastname = userInfos.lastname;
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -92,7 +128,7 @@ export default function EditUser(){
         },
     });
     return(
-        <GridItem xs={3} sm={3} md={3} >
+        <GridItem xs={8} sm={8} md={8} >
             { loading ? <p>Chargement en cours ...</p> : (
                 <Card >
                     <CardHeader>
@@ -101,6 +137,16 @@ export default function EditUser(){
                             subTitle=""
                             icon={<FontAwesomeIcon icon={faUserEdit} size="2x"/>}
                         />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            className={classes.button}
+                            startIcon={<FontAwesomeIcon icon={faEdit}/>}
+                            onClick={() => handleGoBack()}
+                        >
+                            Retour
+                        </Button>
                     </CardHeader>
                     <CardBody>
                         <h4 style={{color: message  ? 'Green' : 'red'}}>{message || error }</h4>

@@ -2,11 +2,11 @@
 import {
     CLEAR_AUTH_STATE,
     LOGIN_FAIL,
-    LOGIN_LOADING,
+    //LOGIN_LOADING,
     LOGIN_SUCCESS,
     LOGOUT_USER
 } from "../../constants/actionsTypes/index";
-const token = localStorage.getItem('token');
+//const token = localStorage.getItem('token');
 const auth = (state, {type, payload}) => {
     switch (type) {
         case LOGIN_SUCCESS:
