@@ -85,8 +85,9 @@ export default function Navigation() {
                         <Route path="/properties" component={props => <Properties/>}/>
                         <Route path="/goals" component={props => <Goals/>}/>
                         <Route exact path="/users" component={props => <Users/>}/>
-                        <Route exact path="/clients" component={props => <Clients/>}/>
                         <Route path="/users/:id" component={props => <Users/>}/>
+                        <Route exact path="/clients" component={props => <Clients/>}/>
+                        <Route path="/clients/:id" component={props => <Clients/>}/>
                     </main>
                 </React.Fragment>
             )}

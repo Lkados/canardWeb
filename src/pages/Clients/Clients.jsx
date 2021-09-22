@@ -17,6 +17,7 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import {faEdit, faUsers} from "@fortawesome/free-solid-svg-icons";
 import Button from '@material-ui/core/Button';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import AddClient from "./actions/AddClient";
 
 
 const styles = {
@@ -54,12 +55,13 @@ const useStyles = makeStyles(styles);
 function Clients() {
     const classes = useStyles();
     const history = useHistory();
-    const [clientssData, setClientsData] = useState([]);
+    const [clientsData, setClientsData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [addClientForm, setAddClientForm] = useState(false);
     const {id} = useParams();
-    console.log(id);
+
     const handleRowEdit = (id) =>{
-        let path = `/users/` + id;
+        let path = `/clients/` + id;
         history.push(path);
     }
     useEffect(() => {
@@ -108,29 +110,48 @@ function Clients() {
 
     return (
         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} >
-                <Card >
-                    <CardHeader>
-                        <PageHeader
-                            title="Clients"
-                            subTitle="Liste des clients"
-                            icon={<FontAwesomeIcon icon={faUsers} size="2x"/>}
-                        />
-                    </CardHeader>
-                    <CardBody>
-                        <div >
-                            {loading ? <p>chargement en cours ...</p> : (
-                                <div>
-                                    <MUIDataTable
-                                        columns={columns}
-                                        data={clientssData}
-                                        options={options}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </CardBody>
-                </Card>
+            <GridItem xs={110} sm={10} md={10}>
+                {loading ? <p>chargement en cours ...</p> : (
+                    <div>
+                        {
+                            id
+                                ? <AddClient />
+                                : addClientForm ?
+                                <AddClient setAddClientForm = {setAddClientForm} />
+                                :
+                                <Card>
+                                    <CardHeader>
+                                        <PageHeader
+                                            title="Clients"
+                                            subTitle="Liste des clients"
+                                            icon={<FontAwesomeIcon icon={faUsers} size="2x"/>}
+                                        />
+                                    </CardHeader>
+                                    <CardBody>
+                                        <div>
+                                            <MUIDataTable
+                                                title={
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        size="small"
+                                                        className={classes.button}
+                                                        startIcon={<FontAwesomeIcon icon={faUsers}/>}
+                                                        onClick={() => setAddClientForm(true)}
+                                                    >
+                                                        Ajouter
+                                                    </Button>
+                                                }
+                                                columns={columns}
+                                                data={clientsData}
+                                                options={options}
+                                            />
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                        }
+                    </div>
+                )}
             </GridItem>
             {/*{
                 id ?

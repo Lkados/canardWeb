@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://canardemo.herokuapp.com/',
 });
 
 axiosInstance.defaults.withCredentials = true;

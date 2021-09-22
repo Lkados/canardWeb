@@ -8,11 +8,11 @@ import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import GridItem from "../../../components/Grid/GridItem";
-import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import React, {useState} from "react";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {updateUser, getUser} from "../../../api/immoApi";
+import {addClient, addUser} from "../../../api/immoApi";
+import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
 const styles = {
@@ -47,28 +47,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function EditUser(){
-    const history = useHistory();
-    const classes = useStyles();
-    const [userInfos, setUserInfos] = useState([]);
+export default function AddClient(props){
+
+    //const [user, setUser] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    let { id } = useParams();
+    const classes = useStyles();
 
-    useEffect( () => {
-        getUser(id).then(result => {
-            setUserInfos(result.data)
-            console.log(result.data.lastname)
-        })
-            .catch((error) => {
-                console.log(error)
-            });
-    },[id])
-    const handleGoBack = () => {
-        let path = `/users`;
-        history.push(path);
-    }
     const validationSchema = yup.object({
         lastname: yup
             .string('Veuillez saisir votre nom')
@@ -84,38 +70,35 @@ export default function EditUser(){
             .string('Veuillez saisir votre adresse email')
             .email('Veuillez vérifier votre adresse email')
             .required('Email is required'),
-        password: yup
-            .string('Veuillez saisir votre mot de passe')
-            .min(8, 'Mot de passe pas faible')
-            .required('Veuillez saisir votre mot de passe'),
+        adress: yup
+            .string('Veuillez saisir votre adresse')
+            .required('Veuillez saisir votre adresse'),
         confirmPassword: yup
-            .string('Veuillez confirmer votre mot de passe')
-            .min(8, 'Mot de passe pas faible')
-            .oneOf([yup.ref('password'), null], 'Passwords must match')
-            .required('Veuillez saisir votre mot de passe'),
-        id_role: yup
-            .string('Veuillez choisir un role')
-            .required('Veuillez choisir un role'),
+            .string('Veuillez saisir un commentaire valide'),
+        type: yup
+            .string('Veuillez choisir un type de client')
+            .required('Veuillez choisir un type de client'),
     });
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            firstname: userInfos.firstname || '' ,
-            lastname: userInfos.lastname,
-            phone : userInfos.phone,
-            email: userInfos.email,
-            password: '',
-            confirmPassword:'',
-            id_role: userInfos.id_role ? userInfos.id_role.toString() : ''
+            firstname: '',
+            lastname: '',
+            phone : '',
+            email: '',
+            adress: '',
+            comment: '',
+            type:'1'
         },
         validationSchema: validationSchema,
         onSubmit: (values,{resetForm}) => {
             setLoading(true)
             console.log('test')
-            updateUser(id, values).then(result => {
+            addClient(values).then(result => {
+                //setUser(result.data)
                 setLoading(false)
-                setMessage('Utilisateur modifier avec succée')
+                setMessage('Client crée avec succée')
                 setError('')
                 resetForm({})
             })
@@ -123,17 +106,17 @@ export default function EditUser(){
                     console.log(error)
                     setLoading(false)
                     setMessage('')
-                    setError("Cet utilisateur existe deja")
+                    setError("Ce client existe deja")
                 });
         },
     });
     return(
-        <GridItem xs={10} sm={10} md={10} >
+        <GridItem xs={12} sm={12} md={12} >
             { loading ? <p>Chargement en cours ...</p> : (
                 <Card >
                     <CardHeader>
                         <PageHeader
-                            title="Modifier un utilisateur"
+                            title="Ajouter un client"
                             subTitle=""
                             icon={<FontAwesomeIcon icon={faUserEdit} size="2x"/>}
                         />
@@ -143,7 +126,7 @@ export default function EditUser(){
                             size="small"
                             className={classes.button}
                             startIcon={<FontAwesomeIcon icon={faEdit}/>}
-                            onClick={() => handleGoBack()}
+                            onClick={() => props.setAddClientForm(false)}
                         >
                             Retour
                         </Button>
@@ -156,6 +139,7 @@ export default function EditUser(){
                                     fullWidth
                                     id="lastname"
                                     name="lastname"
+                                    label="Nom"
                                     value={formik.values.lastname}
                                     onChange={formik.handleChange}
                                     error={formik.touched.lastname && Boolean(formik.errors.lastname)}
@@ -165,6 +149,7 @@ export default function EditUser(){
                                     fullWidth
                                     id="firstname"
                                     name="firstname"
+                                    label="Prénom"
                                     value={formik.values.firstname}
                                     onChange={formik.handleChange}
                                     error={formik.touched.firstname && Boolean(formik.errors.firstname)}
@@ -174,6 +159,7 @@ export default function EditUser(){
                                     fullWidth
                                     id="phone"
                                     name="phone"
+                                    label="Téléphone"
                                     value={formik.values.phone}
                                     onChange={formik.handleChange}
                                     error={formik.touched.phone && Boolean(formik.errors.phone)}
@@ -183,6 +169,7 @@ export default function EditUser(){
                                     fullWidth
                                     id="email"
                                     name="email"
+                                    label="Email"
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
                                     error={formik.touched.email && Boolean(formik.errors.email)}
@@ -190,40 +177,39 @@ export default function EditUser(){
                                 />
                                 <TextField
                                     fullWidth
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    value={formik.values.password}
+                                    id="adress"
+                                    name="adress"
+                                    label="Adresse"
+                                    type="adress"
+                                    value={formik.values.adress}
                                     onChange={formik.handleChange}
-                                    error={formik.touched.password && Boolean(formik.errors.password)}
-                                    helperText={formik.touched.password && formik.errors.password}
+                                    error={formik.touched.adress && Boolean(formik.errors.adress)}
+                                    helperText={formik.touched.adress && formik.errors.adress}
                                 />
                                 <TextField
                                     fullWidth
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    label="confirmer votre mot de passe"
-                                    type="password"
-                                    value={formik.values.confirmPassword}
+                                    id="comment"
+                                    name="comment"
+                                    label="Commentaire"
+                                    type="comment"
+                                    value={formik.values.comment}
                                     onChange={formik.handleChange}
-                                    error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-                                    helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                                    error={formik.touched.comment && Boolean(formik.errors.comment)}
+                                    helperText={formik.touched.comment && formik.errors.comment}
                                 />
                                 <Select
-                                    id="id_role"
-                                    name="id_role"
-                                    label="role"
+                                    id="type"
+                                    name="type"
+                                    label="type"
                                     type="select"
-                                    value={formik.values.id_role}
+                                    value={formik.values.type}
                                     onChange={formik.handleChange}
-                                    error={formik.touched.id_role && Boolean(formik.errors.id_role)}
-                                    helperText={formik.touched.id_role && formik.errors.id_role}
+                                    error={formik.touched.type && Boolean(formik.errors.type)}
+                                    helperText={formik.touched.type && formik.errors.type}
                                     style={{width:'200px'}}
                                 >
-                                    <option value={1}>Directeur</option>
-                                    <option value={2}>Commercial</option>
-                                    <option value={3}>Secrétaire</option>
+                                    <MenuItem selected={true} value={1}>Propriétaire</MenuItem>
+                                    <MenuItem value={2}>Locataire</MenuItem>
                                 </Select>
                                 <Button
                                     color="primary"
@@ -231,7 +217,7 @@ export default function EditUser(){
                                     fullWidth type="submit"
                                     style={{marginTop:'25px'}}
                                 >
-                                    Modifier
+                                    Créer
                                 </Button>
                             </form>
                         </div>

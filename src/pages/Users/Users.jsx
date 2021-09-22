@@ -110,7 +110,7 @@ function Users() {
 
     return (
         <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
+            <GridItem xs={110} sm={10} md={10}>
                 {loading ? <p>chargement en cours ...</p> : (
                     <div>
                         {
