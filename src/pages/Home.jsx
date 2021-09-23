@@ -12,11 +12,13 @@ function Home() {
     const [goals, setGoals] = useState([])
     const [loading, setLoading] = useState(true)
 
+
+    useEffect(() => {
         getGoals().then(res => {
             setGoals(res.data)
             setLoading(false)
-        }, [])
-
+        })
+    }, [loading])
     return (
         <div className="container">
             <div className="dashboard">

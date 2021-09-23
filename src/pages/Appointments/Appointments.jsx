@@ -9,14 +9,12 @@ function Appointments() {
     const [appointments, setAppointments] = useState([]);
     const [date, setDate] = useState(new Date());
     const [loading, setLoading] = useState(true);
-
-    console.log(date)
     useEffect(() => {
         getAppointment().then(res => {
             setAppointments(res.data)
             setLoading(false)
         })
-    }, [])
+    }, [loading])
 //const appointementCalendar = appointments.map((appointment) => ({'title' : appointment.description, 'date' : appointment.date}));
     const appointementCalendar = appointments.map((appointment) => [{'title' : appointment.description, 'date' : appointment.date}]);
     console.log(appointementCalendar.flat())
