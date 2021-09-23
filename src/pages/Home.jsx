@@ -5,46 +5,27 @@ import GoalModal from "../components/GoalsModal";
 import {getAppointment, getGoals} from '../api/immoApi'
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import interactionPlugin from "@fullcalendar/interaction"
+import Appointments from "./Appointments/Appointments";
 
 function Home() {
-    const [appointments, setAppointments] = useState([])
     const [goals, setGoals] = useState([])
     const [loading, setLoading] = useState(true)
-    const [date, setDate] = useState(new Date());
-    console.log(date)
-    useEffect(() => {
-        getAppointment().then(res => {
-            setAppointments(res.data)
-            setLoading(false)
-        })
 
         getGoals().then(res => {
             setGoals(res.data)
             setLoading(false)
-        })
-        
-    }, [])
+        }, [])
 
     return (
         <div className="container">
-            {loading ? <p>Chargement en cours ...</p> : (
-
             <div className="dashboard">
                 {/* <div className="stats align-self-center">
                     <LineChart />
                 </div> */}
                 <div className="appointments">
                     <h2>Mes rendez vous</h2>
-                    <FullCalendar
-                        plugins={[ dayGridPlugin ]}
-                        initialView="dayGridMonth"
-                    />
-                    <div className="AppoitmentModal">
-                        {/* boucler sur un for each depuis les données de l'user et api props : subject, date, content*/}
-                        {appointments.map( (appointment) => (
-                            <AppoitmentModal key={appointment.id_appointments} subject={appointment.title} date={appointment.date} content={appointment.description} name={appointment.firstname} lastname={appointment.lastname}/>
-                        ))}
-                    </div>
+                    <Appointments />
                 </div>
                 
                 <div className="mt-3 dasboardGoals">
@@ -56,7 +37,6 @@ function Home() {
                     </div>
                 </div>
             </div>
-            )}
         </div>
     );
 }
