@@ -27,7 +27,7 @@ export async function getProperties() {
 }
 
 export async function getClientsList() {
-    const request = await axiosInstance.get('client')
+    const request = await axiosInstance.get('clients')
     return request
 }
 

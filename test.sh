@@ -1,3 +1,4 @@
+cd F:\canardWeb
 git add .
 git commit -m "automated push"
 git pull origin master
