@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import './assets/home.css';
-// import {Chart} from 'chart.js'
-// import LineChart from "../components/LineChart";
 import AppoitmentModal from "../components/AppoitmentModal";
 import GoalModal from "../components/GoalsModal";
 import {getAppointment, getGoals} from '../api/immoApi'
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
 function Home() {
     const [appointments, setAppointments] = useState([])
     const [goals, setGoals] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const [date, setDate] = useState(new Date());
+    console.log(date)
     useEffect(() => {
         getAppointment().then(res => {
             setAppointments(res.data)
@@ -34,6 +35,10 @@ function Home() {
                 </div> */}
                 <div className="appointments">
                     <h2>Mes rendez vous</h2>
+                    <FullCalendar
+                        plugins={[ dayGridPlugin ]}
+                        initialView="dayGridMonth"
+                    />
                     <div className="AppoitmentModal">
                         {/* boucler sur un for each depuis les données de l'user et api props : subject, date, content*/}
                         {appointments.map( (appointment) => (

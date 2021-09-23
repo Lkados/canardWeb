@@ -22,7 +22,7 @@ function GoalAdd(props) {
         if (!values.title) {
             errors.title = 'Le champ titre est requis';
         }
-        if (values.id_users == 'null' || !values.id_users) {
+        if (values.id_users === 'null' || !values.id_users) {
             errors.id_users = 'veuillez selectionner un utilisateur';
         }
 
@@ -36,7 +36,7 @@ function GoalAdd(props) {
             errors.description = 'l\'objectif doit comporter une description';
         }
 
-        if (values.id_type == 'null' || !values.id_type) {
+        if (values.id_type === 'null' || !values.id_type) {
             errors.id_type = 'veuillez selectionner un type d\'objectif';
         }
         return errors;

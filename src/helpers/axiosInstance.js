@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
 import axios from 'axios';
-import RefreshUser from "../context/actions/refreshUser";
+import Cookies from "js-cookie";
+
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://canardemo.herokuapp.com/',
 });
 
 axiosInstance.defaults.withCredentials = true;
@@ -26,6 +26,7 @@ axiosInstance.interceptors.request.use(
 );
 */
 
+
 axiosInstance.interceptors.response.use(
     (response) =>
         new Promise((resolve, reject) => {
@@ -42,7 +43,11 @@ axiosInstance.interceptors.response.use(
                 reject(error);
             });
         }else if (error.response.status === 401) {
-            console.log('test');
+            axiosInstance.get('logout').then((res) => {
+                Cookies.remove('loading');
+                Cookies.remove('isLoggedIn');
+                console.log('res')
+            })
             //RefreshUser();
         } else {
             return new Promise((resolve, reject) => {

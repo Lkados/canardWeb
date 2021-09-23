@@ -54,13 +54,15 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function Users() {
-    const classes = useStyles();
     const history = useHistory();
+    const classes = useStyles();
     const [usersData, setUsersData] = useState([]);
     const [loading, setLoading] = useState(true);
     const {id} = useParams();
+    const [addUserForm, setAddUserForm] = useState(false);
     console.log(id);
-    const handleRowEdit = (id) =>{
+
+    const handleRowEdit = (id) => {
         let path = `/users/` + id;
         history.push(path);
     }
@@ -72,11 +74,11 @@ function Users() {
     }, []);
 
     const columns = [
-        { label: 'ID', name: 'id_users' },
-        { label: 'Prénom', name: 'firstname' },
-        { label: 'Nom', name: 'lastname' },
-        { label: 'Email', name: 'email', options: { sort: true } },
-        { label: 'Téléphone', name: 'phone' },
+        {label: 'ID', name: 'id_users'},
+        {label: 'Prénom', name: 'firstname'},
+        {label: 'Nom', name: 'lastname'},
+        {label: 'Email', name: 'email', options: {sort: true}},
+        {label: 'Téléphone', name: 'phone'},
         {
             name: "Action",
             options: {
@@ -91,7 +93,7 @@ function Users() {
                             size="small"
                             className={classes.button}
                             startIcon={<FontAwesomeIcon icon={faEdit}/>}
-                            onClick={() => handleRowEdit(tableMeta.rowData[0]) }
+                            onClick={() => handleRowEdit(tableMeta.rowData[0])}
                         >
                             Modifier
                         </Button>
@@ -106,42 +108,61 @@ function Users() {
         caseSensitive: false,
     };
 
-
     return (
         <GridContainer>
-            <GridItem xs={7} sm={7} md={7} >
-                <Card >
-                    <CardHeader>
-                        <PageHeader
-                            title="Utilisateurs"
-                            subTitle="Liste des utilisateurs"
-                            icon={<FontAwesomeIcon icon={faUsers} size="2x"/>}
-                        />
-                    </CardHeader>
-                    <CardBody>
-                        <div >
-                            {loading ? <p>chargement en cours ...</p> : (
-                                <div>
-                                    <MUIDataTable
-                                        columns={columns}
-                                        data={usersData}
-                                        options={options}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </CardBody>
-                </Card>
+            <GridItem xs={110} sm={10} md={10}>
+                {loading ? <p>chargement en cours ...</p> : (
+                    <div>
+                        {
+                            id
+                                ? <EditUser />
+                                : addUserForm ?
+                                <AddUser setAddUserForm = {setAddUserForm} />
+                                :
+                                <Card>
+                                    <CardHeader>
+                                        <PageHeader
+                                            title="Utilisateurs"
+                                            subTitle="Liste des utilisateurs"
+                                            icon={<FontAwesomeIcon icon={faUsers} size="2x"/>}
+                                        />
+                                    </CardHeader>
+                                    <CardBody>
+                                        <div>
+                                            <MUIDataTable
+                                                title={
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        size="small"
+                                                        className={classes.button}
+                                                        startIcon={<FontAwesomeIcon icon={faUsers}/>}
+                                                        onClick={() => setAddUserForm(true)}
+                                                    >
+                                                        Ajouter
+                                                    </Button>
+                                                }
+                                                columns={columns}
+                                                data={usersData}
+                                                options={options}
+                                            />
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                        }
+                    </div>
+                )}
             </GridItem>
-            {
+            {/*{
                 id ?
                     <EditUser />
                     :
                     <AddUser />
 
-            }
+            }*/}
         </GridContainer>
-    )};
+    )
+};
 
 export default Users;
 

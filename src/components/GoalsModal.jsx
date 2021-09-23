@@ -1,5 +1,4 @@
 import React from 'react'
-import axiosInstance from "../helpers/axiosInstance";
 
 function GoalsModal(props) {
     return (

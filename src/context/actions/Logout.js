@@ -1,9 +1,8 @@
-import React from 'react';
 import {LOGOUT_USER} from "../../constants/actionsTypes";
 import Cookies from "js-cookie";
 import axiosInstance from "../../helpers/axiosInstance";
 
-export default () => (dispatch) => {
+const Logout = () => (dispatch) => {
     axiosInstance.get('logout').then((res) => {
         Cookies.remove('loading');
         Cookies.remove('isLoggedIn');
@@ -15,3 +14,4 @@ export default () => (dispatch) => {
 }
 
 
+export default Logout;

@@ -7,13 +7,13 @@ import {getGoals} from '../api/immoApi'
 
 function Goals() {
     const [goals, setGoals] = useState([])
-    const [loading, setLoading] = useState(true)
+    //const [loading, setLoading] = useState(true)
     const [refresh, setRefresh] = useState(false)
     
     useEffect(() => {
         getGoals().then(res => {
             setGoals(res.data)
-            setLoading(false)
+            //setLoading(false)
             setRefresh(false)
         })
     }, [refresh])

@@ -53,4 +53,7 @@ export async function updateUser(id, values) {
     const request = await axiosInstance.put('users/' + id, values)
     return request
 }
-
+export async function addClient(values) {
+    const request = await axiosInstance.post('clients', values)
+    return request
+}

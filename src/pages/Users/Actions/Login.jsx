@@ -44,7 +44,7 @@ export default function Login() {
     }
     const {
         authDispatch,
-        authState: {error, loading},
+        authState: {error, /*loading*/},
     } = useContext(GlobalContext);
 
     const handleSubmit = e => {
