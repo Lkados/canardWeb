@@ -1,0 +1,25 @@
+.goals {
+  height: auto;
+  min-height: 85vh;
+  display: grid;
+  grid-template-columns: 45% 53%;
+  grid-template-rows: 50% 50%;
+  grid-column-gap: 2%;
+  grid-template-areas:
+  "goalsList goalsManagment"
+  "goalsList goalsManagment";
+}
+
+.goalsList {
+  grid-area: goalsList;
+  margin: 10px;
+}
+
+.goalsManagment {
+  grid-area: goalsManagment;
+  margin: 10px;
+}
+
+.noOverfow{
+  overflow: hidden;
+}

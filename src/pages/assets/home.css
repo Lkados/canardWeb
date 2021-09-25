@@ -1,0 +1,29 @@
+/* .dashboard {
+  height:95vh;
+  display: grid;
+  grid-template-areas:
+    "stats stats"
+    "rdv"
+    "objectifs";
+}
+
+.stats {
+  margin-top: 10px;
+  grid-area: stats;
+}
+
+.appointments {
+  grid-area: rdv;
+  overflow: auto;
+}
+
+.dasboardGoals{
+  grid-area: objectifs;
+  overflow: auto;
+} */
+
+/* .container{
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+} */
