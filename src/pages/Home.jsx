@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './assets/home.css';
-import AppoitmentModal from "../components/AppoitmentModal";
 import GoalModal from "../components/GoalsModal";
-import {getAppointment, getGoals} from '../api/immoApi'
-import FullCalendar from '@fullcalendar/react' // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
-import interactionPlugin from "@fullcalendar/interaction"
+import {getGoals} from '../api/immoApi'
 import Appointments from "./Appointments/Appointments";
+import GridContainer from "../components/Grid/GridContainer";
+import GridItem from "../components/Grid/GridItem";
 
 function Home() {
     const [goals, setGoals] = useState([])
@@ -20,26 +18,11 @@ function Home() {
         })
     }, [loading])
     return (
-        <div className="container">
-            <div className="dashboard">
-                {/* <div className="stats align-self-center">
-                    <LineChart />
-                </div> */}
-                <div className="appointments">
-                    <h2>Mes rendez vous</h2>
-                    <Appointments />
-                </div>
-                
-                <div className="mt-3 dasboardGoals">
-                    <h2>Mes objectifs</h2>
-                    <div>
-                        {goals.map( (goal) => (
-                            <GoalModal key={goal.id_goals} subject={goal.title} end_date={goal.end_date} content={goal.description} name={goal.firstname} lastname={goal.lastname} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <GridContainer>
+            <GridItem xs={10} sm={10} md={10} >
+                <Appointments />
+            </GridItem>
+        </GridContainer>
     );
 }
 

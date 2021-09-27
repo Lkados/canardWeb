@@ -2,8 +2,12 @@ import axiosInstance from "../helpers/axiosInstance.js";
 
 
 
-export async function getAppointment() {
-    const request = await axiosInstance.get('appointement')
+export async function getUserAppointments() {
+    const request = await axiosInstance.get('appointments')
+    return request
+}
+export async function getAppointmentsPerDate(date) {
+    const request = await axiosInstance.get('appointment'+ '?date=' + date)
     return request
 }
 
