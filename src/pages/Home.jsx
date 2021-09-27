@@ -22,10 +22,8 @@ function Home() {
     return (
         <div className="container">
             <div className="dashboard">
-                {/* <div className="stats align-self-center">
-                    <LineChart />
-                </div> */}
                 <div className="appointments">
+                    // Laissez les rendez-vous je les ai sur mon autre ordi
                     <h2>Mes rendez vous</h2>
                     <Appointments />
                 </div>

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import PropertiesList from "../components/PropertiesList";
-import PropertyForm from "../components/NewProperty";
-import './assets/Properties.css';
+import PropertiesList from "../../components/PropertiesList";
+import PropertyForm from "../../components/NewProperty";
+import '../assets/Properties.css';
 
 function Properties() {
     const [formProperty, showForm] = useState(false);

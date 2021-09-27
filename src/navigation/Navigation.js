@@ -4,7 +4,7 @@ import SideNav, {NavIcon, NavItem, NavText} from "@trendmicro/react-sidenav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBullseye, faHome, faLaptopHouse, faUsers, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import Home from "../pages/Home";
-import Properties from "../pages/Properties";
+import Properties from "../pages/Properties/Properties";
 import Goals from "../pages/Goals";
 import Users from "../pages/Users/Users"
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
