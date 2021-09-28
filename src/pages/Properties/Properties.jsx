@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import PropertiesList from "../../components/PropertiesList";
-import PropertyForm from "../../components/NewProperty";
+import PropertyForm from "./actions/AddProperty";
 import '../assets/Properties.css';
 
 function Properties() {
