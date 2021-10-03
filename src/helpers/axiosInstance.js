@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 
 const axiosInstance = axios.create({
-    baseURL: 'https://www.mohamedk.fr/CanImoApi/public/',
+    baseURL: 'https://canardemo.herokuapp.com',
 });
 
 axiosInstance.defaults.withCredentials = true;
