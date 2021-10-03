@@ -85,8 +85,8 @@ export default function AddApointment(props){
 
     const formik = useFormik({
         initialValues: {
-            firstname: '',
-            lastname: '',
+            title: '',
+            description: '',
             phone : '',
             email: '',
             password: '',
@@ -116,10 +116,10 @@ export default function AddApointment(props){
     useEffect(() => {
         getAppointmentsPerDate(date).then(res => {
             setTodayAppointments(res.data)
-            console.log(todayAppointments)
             setLoading(false)
         })
     }, [date])
+
     return(
         <div>
         {loading ? <p>chargement en cours ...</p> : (
@@ -140,13 +140,23 @@ export default function AddApointment(props){
                             <form onSubmit={formik.handleSubmit}>
                                 <TextField
                                     fullWidth
-                                    id="lastname"
-                                    name="lastname"
-                                    label="Nom"
-                                    value={formik.values.lastname}
+                                    id="title"
+                                    name="title"
+                                    label="Titre"
+                                    value={formik.values.title}
                                     onChange={formik.handleChange}
-                                    error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-                                    helperText={formik.touched.lastname && formik.errors.lastname}
+                                    error={formik.touched.title && Boolean(formik.errors.title)}
+                                    helperText={formik.touched.title && formik.errors.title}
+                                />
+                                <TextField
+                                    fullWidth
+                                    id="description"
+                                    name="description"
+                                    label="Description"
+                                    value={formik.values.description}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.description && Boolean(formik.errors.description)}
+                                    helperText={formik.touched.description && formik.errors.description}
                                 />
                                 <Button
                                     color="primary"

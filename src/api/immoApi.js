@@ -36,7 +36,7 @@ export async function getClientsList() {
 }
 
 export async function getClientsFilter(str) {
-    const request = await axiosInstance.get('client?filter='+str)
+    const request = await axiosInstance.get('clients?filter='+str)
     return request
 }
 
@@ -59,5 +59,9 @@ export async function updateUser(id, values) {
 }
 export async function addClient(values) {
     const request = await axiosInstance.post('clients', values)
+    return request
+}
+export async function authUser() {
+    const request = await axiosInstance.get('me')
     return request
 }

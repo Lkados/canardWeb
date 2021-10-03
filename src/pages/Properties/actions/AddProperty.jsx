@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {getClientsFilter, addProperty, authUser} from '../api/immoApi'
+import {getClientsFilter, addProperty, authUser} from "../../../api/immoApi";
 import randomString from "random-string";
 import * as yup from 'yup';
 import { useFormik, setFieldValue } from 'formik';
 
-function NewProperty() {
+function AddProperty() {
 	const [labelText, setText] = useState("Prix de vente");
 	const [inputSearch, setInputSearch] = useState('');
 	const [client, setClient] = useState([]);
@@ -63,7 +63,7 @@ function NewProperty() {
 		energy_class: yup.number()
 			.min(0, 'La donnée attendue n\'est pas correcte')
 			.max(6, 'La donnée attendue n\'est pas correcte'),
-		id_client: yup.number()
+		id_clients: yup.number()
 			.positive()
 			.integer()
 			.required('Ce champ est requis')
@@ -94,9 +94,10 @@ function NewProperty() {
 		validationSchema: schema,
 		onSubmit: values => {
 			values = {...values, id_users: user.id_users}
-			addProperty(values).then(response => {
+			console.log(values)
+			/*addProperty(values).then(response => {
 				console.log(response);
-			});
+			});*/
 		}
 	})
 
@@ -394,20 +395,20 @@ function NewProperty() {
 									onChange={searchClient}
 								/>
 							</div>
-							{formik.touched.id_client && formik.errors.id_client ? (
-								<div className="text-danger small">{formik.errors.id_client}</div>
+							{formik.touched.id_clients && formik.errors.id_clients ? (
+								<div className="text-danger small">{formik.errors.id_clients}</div>
 							) : null}
 							{ (client.length != 0) ?
 								<div className="mt-2">
 									<div className="mx-1">{client.length} résulat(s) trouvé(s) pour <span className="px-1 font-italic bg-dark text-light">{inputSearch}</span></div>
-									<select className="form-control" name="id_client" onChange={formik.handleChange}>
+									<select className="form-control" name="id_clients" onChange={formik.handleChange}>
 										<option value="" selected disabled hidden>Choisir un client</option>
 										{ client.map((clientInfo) => (
-											<option value={clientInfo.id_clients}>{clientInfo.firstname+' '+clientInfo.lastname} ({clientInfo.email})</option>
+											<option value={parseInt(clientInfo.id_clients)}>{clientInfo.firstname+' '+clientInfo.lastname} ({clientInfo.email})</option>
 										)) }
 									</select>
-									{formik.touched.id_client && formik.errors.id_client ? (
-										<div className="text-danger small">{formik.errors.id_client}</div>
+									{formik.touched.id_clients && formik.errors.id_clients ? (
+										<div className="text-danger small">{formik.errors.id_clients}</div>
 									) : null}
 								</div>
 								: null }
@@ -425,4 +426,4 @@ function NewProperty() {
 	)
 }
 
-export default NewProperty;
+export default AddProperty;
