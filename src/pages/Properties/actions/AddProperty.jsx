@@ -95,9 +95,9 @@ function AddProperty() {
 		onSubmit: values => {
 			values = {...values, id_users: user.id_users}
 			console.log(values)
-			/*addProperty(values).then(response => {
+			addProperty(values).then(response => {
 				console.log(response);
-			});*/
+			});
 		}
 	})
 
